@@ -35,7 +35,7 @@ endfunction
 function! s:initRpc()
   if s:neovimJavaJobId == 0
     " let jobid = jobstart(['java', '-jar', s:bin], { 'rpc': v:true, 'on_stderr': 'Receive' })
-    let jobid = jobstart(['java', '-jar', s:bin, s:lib], { 'rpc': v:true})
+    let jobid = jobstart(['java', '-Xmx50m', '-jar', s:bin, s:lib], { 'rpc': v:true})
     return jobid
   else
     return s:neovimJavaJobId
