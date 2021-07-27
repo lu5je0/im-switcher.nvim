@@ -3,7 +3,7 @@ if !exists('s:neovimJavaJobId')
   let s:neovimJavaJobId = 0
 endif
 
-if !has("mac") || has("gui")
+if has("gui")
     finish
 endif
 
