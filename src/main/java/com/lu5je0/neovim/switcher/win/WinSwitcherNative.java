@@ -20,7 +20,7 @@ public class WinSwitcherNative implements SwitcherNative {
 
     public WinSwitcherNative() {
         try {
-            socket = new Socket(InetAddress.getByName(null), 9090);
+            socket = new Socket(InetAddress.getByName(null), 38713);
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new OutputStreamWriter(socket.getOutputStream());
         } catch (Exception e) {

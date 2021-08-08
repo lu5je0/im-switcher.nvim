@@ -10,6 +10,23 @@ endif
 " Path to JAR
 let s:lib = expand('<sfile>:p:h').'/../lib/libinput-source-switcher.dylib'
 let s:bin = expand('<sfile>:p:h').'/../jar/im-switcher.jar'
+let s:im_server_bin = get(g:, 'WinImSwitcherServerPath', 'D:\IdeaProjects\im-switcher\jar\WinImSwitcherServer.jar')
+
+function! s:is_wsl()
+    if exists("g:isWsl")
+        return g:isWsl
+    endif
+
+    if has("unix")
+        let lines = readfile("/proc/version")
+        if lines[0] =~ "Microsoft"
+            let g:isWsl=1
+            return 1
+        endif
+    endif
+    let g:isWsl=0
+    return 0
+endfunction
 
 " Entry point. Initialize RPC
 function! s:connect()
@@ -35,6 +52,9 @@ endfunction
 function! s:initRpc()
   if s:neovimJavaJobId == 0
     " let jobid = jobstart(['java', '-Xmx50m', '-jar', s:bin, s:lib], { 'rpc': v:true, 'on_stderr': 'Receive' })
+    if s:is_wsl() == 1
+        call jobstart(['java.exe', '-Xmx50m', '-jar', s:im_server_bin])
+    endif
     let jobid = jobstart(['java', '-Xmx50m', '-jar', s:bin, s:lib], { 'rpc': v:true})
     return jobid
   else
