@@ -18,7 +18,7 @@ public class MacSwitcherNative implements SwitcherNative {
 
     public native String getCurrentInputSourceID();
 
-    public native int switchInputSource(String targetIme);
+    public native void switchInputSource(String targetIme);
 
     @NeovimRequestHandler("switchInsertMode")
     public void switchInsertMode(RequestMessage requestMessage) {

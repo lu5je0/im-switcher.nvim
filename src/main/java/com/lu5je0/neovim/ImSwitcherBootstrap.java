@@ -7,6 +7,7 @@ import com.ensarsarajcic.neovim.java.handler.NeovimHandlerManager;
 import com.ensarsarajcic.neovim.java.handler.annotations.NeovimRequestHandler;
 import com.lu5je0.neovim.switcher.SwitcherNative;
 import com.lu5je0.neovim.switcher.mac.MacSwitcherNative;
+import com.lu5je0.neovim.switcher.win.WinSwitcherNative;
 
 public final class ImSwitcherBootstrap {
 
@@ -16,7 +17,7 @@ public final class ImSwitcherBootstrap {
         //no instance
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         libPath = args[0];
 
         var rpcConnection = new StdIoRpcConnection();
@@ -33,7 +34,7 @@ public final class ImSwitcherBootstrap {
      */
     public static final class ImSwitcher {
 
-        private SwitcherNative switcherNative;
+        private final SwitcherNative switcherNative;
 
         private String lastIme;
 
@@ -41,11 +42,10 @@ public final class ImSwitcherBootstrap {
 
         public ImSwitcher() {
             String osName = System.getProperty("os.name");
-            System.out.println(osName);
             if (osName.startsWith("Mac OS")) {
                 switcherNative = new MacSwitcherNative();
-            } else if (osName.startsWith("Windows")) {
-                switcherNative = new MacSwitcherNative();
+            } else {
+                switcherNative = new WinSwitcherNative();
             }
 
             lastIme = switcherNative.defaultEnglishIme();

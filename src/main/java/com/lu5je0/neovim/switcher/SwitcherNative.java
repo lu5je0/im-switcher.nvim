@@ -4,7 +4,7 @@ public interface SwitcherNative {
 
     String getCurrentInputSourceID();
 
-    int switchInputSource(String targetIme);
+    void switchInputSource(String targetIme);
 
     String defaultEnglishIme();
 
