@@ -1,5 +1,6 @@
 package com.lu5je0.neovim.switcher.win;
 
+import com.lu5je0.neovim.ImSwitcherBootstrap;
 import com.lu5je0.neovim.switcher.SwitcherNative;
 
 import java.io.BufferedReader;
@@ -20,7 +21,7 @@ public class WinSwitcherNative implements SwitcherNative {
 
     public WinSwitcherNative() {
         try {
-            socket = new Socket(InetAddress.getByName(null), 38713);
+            socket = new Socket(InetAddress.getByName(ImSwitcherBootstrap.wslHost), 38713);
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new OutputStreamWriter(socket.getOutputStream());
         } catch (Exception e) {

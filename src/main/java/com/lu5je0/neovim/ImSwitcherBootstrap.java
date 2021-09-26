@@ -13,12 +13,15 @@ public final class ImSwitcherBootstrap {
 
     public static String libPath = "";
 
+    public static String wslHost = null;
+
     private ImSwitcherBootstrap() {
         //no instance
     }
 
     public static void main(String[] args) {
         libPath = args[0];
+        wslHost = args[1];
 
         var rpcConnection = new StdIoRpcConnection();
         var streamer = RpcClient.getDefaultAsyncInstance();
