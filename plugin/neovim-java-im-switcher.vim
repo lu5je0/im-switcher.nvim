@@ -11,6 +11,7 @@ endif
 let s:lib = expand('<sfile>:p:h').'/../lib/libinput-source-switcher.dylib'
 let s:bin = expand('<sfile>:p:h').'/../jar/im-switcher.jar'
 let s:im_server_bin = get(g:, 'WinImSwitcherServerPath', 'D:\IdeaProjects\im-switcher\jar\WinImSwitcherServer.jar')
+" let s:host = '172.22.192.1'
 let s:host = '127.0.0.1'
 
 function! s:is_wsl()
@@ -53,9 +54,7 @@ endfunction
 function! s:initRpc()
   if s:neovimJavaJobId == 0
     " let jobid = jobstart(['java', '-Xmx50m', '-jar', s:bin, s:lib], { 'rpc': v:true, 'on_stderr': 'Receive' })
-    if s:is_wsl() == 1
-        call jobstart(['java.exe', '-Xmx50m', '-jar', s:im_server_bin])
-    endif
+    call jobstart(['java.exe', '-Xmx50m', '-jar', s:im_server_bin])
     let jobid = jobstart(['java', '-Xmx50m', '-jar', s:bin, s:lib, s:host], { 'rpc': v:true})
     return jobid
   else
