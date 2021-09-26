@@ -11,8 +11,6 @@ endif
 let s:lib = expand('<sfile>:p:h').'/../lib/libinput-source-switcher.dylib'
 let s:bin = expand('<sfile>:p:h').'/../jar/im-switcher.jar'
 let s:im_server_bin = get(g:, 'WinImSwitcherServerPath', 'D:\IdeaProjects\im-switcher\jar\WinImSwitcherServer.jar')
-" let s:host = '172.22.192.1'
-let s:host = '127.0.0.1'
 
 function! s:is_wsl()
     if exists("g:isWsl")
@@ -29,6 +27,13 @@ function! s:is_wsl()
     let g:isWsl=0
     return 0
 endfunction
+
+if s:is_wsl()
+    let s:host = '127.0.0.1'
+else
+    let s:host = system("cat /etc/resolv.conf | grep nameserver | awk '{ printf $2 }'")
+endif
+echo s:host
 
 " Entry point. Initialize RPC
 function! s:connect()
