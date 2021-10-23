@@ -12,23 +12,28 @@ let s:lib = expand('<sfile>:p:h').'/../lib/libinput-source-switcher.dylib'
 let s:bin = expand('<sfile>:p:h').'/../jar/im-switcher.jar'
 let s:im_server_bin = get(g:, 'WinImSwitcherServerPath', 'D:\IdeaProjects\im-switcher\jar\WinImSwitcherServer.jar')
 
-function! s:is_wsl()
+function! s:wsl_version()
     if exists("g:isWsl")
         return g:isWsl
     endif
 
-    if has("unix")
+    if has("mac")
+        return 0
+    elseif has("unix")
         let lines = readfile("/proc/version")
         if lines[0] =~ "Microsoft"
-            let g:isWsl=1
+            let g:isWsl = 1
             return 1
+        elseif lines[0] =~ "WSL2"
+            let g:isWsl = 2
+            return 2
         endif
     endif
-    let g:isWsl=0
+    let g:isWsl = 0
     return 0
 endfunction
 
-if s:is_wsl()
+if s:wsl_version() == 1
     let s:host = '127.0.0.1'
 else
     let s:host = system("cat /etc/resolv.conf | grep nameserver | awk '{ printf $2 }'")
