@@ -1,1 +1,1 @@
-vim im switcher on wsl(wsl1, wsl2)
+vim im switcher on wsl1, wsl2
