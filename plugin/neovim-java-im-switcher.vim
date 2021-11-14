@@ -36,7 +36,8 @@ endfunction
 if s:wsl_version() == 1
     let s:host = '127.0.0.1'
 else
-    let s:host = system("cat /etc/resolv.conf | grep nameserver | awk '{ printf $2 }'")
+    " let s:host = system("cat /etc/resolv.conf | grep nameserver | awk '{ printf $2 }'")
+    let s:host = system("cat /mnt/wsl/resolv.conf | grep nameserver | awk '{ printf $2 }'")
 endif
 echo s:host
 
