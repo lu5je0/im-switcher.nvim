@@ -7,10 +7,14 @@ if has("gui")
     finish
 endif
 
-" Path to JAR
 let s:lib = expand('<sfile>:p:h').'/../lib/libinput-source-switcher.dylib'
 let s:bin = expand('<sfile>:p:h').'/../jar/im-switcher.jar'
-let s:im_server_bin = get(g:, 'WinImSwitcherServerPath', 'D:\IdeaProjects\im-switcher\jar\WinImSwitcherServer.jar')
+let s:im_server_bin_local = expand('<sfile>:p:h').'/../jar/WinImSwitcherServer.jar'
+let s:im_server_bin = 'C:\Users\Public\im-switcher\WinImSwitcherServer.jar'
+
+if !filereadable('/mnt/c/Users/Public/im-switcher/WinImSwitcherServer.jar')
+    call system("mkdir -p /mnt/c/Users/Public/im-switcher && cp " .. s:im_server_bin_local .. " /mnt/c/Users/Public/im-switcher/WinImSwitcherServer.jar")
+endif
 
 function! s:wsl_version()
     if !has('wsl')
@@ -40,7 +44,6 @@ else
     " let s:host = system("cat /etc/resolv.conf | grep nameserver | awk '{ printf $2 }'")
     let s:host = system("cat /mnt/wsl/resolv.conf | grep nameserver | awk '{ printf $2 }'")
 endif
-echo s:host
 
 " Entry point. Initialize RPC
 function! s:connect()
